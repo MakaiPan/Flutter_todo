@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo/components/horizontal_line.dart';
 import 'package:todo/models/task.dart';
 
 class TaskItem extends StatefulWidget {
@@ -17,15 +16,15 @@ class TaskItem extends StatefulWidget {
 class _TaskItemState extends State<TaskItem> {
   void completeTask() {
     setState(() {
-      widget.task.state =
-          widget.task.state == TaskState.todo ? TaskState.done : TaskState.todo;
+      widget.task.state = TaskState.done;
+      widget.task.completeTime = DateTime.now();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: completeTask,
+      onTap: widget.task.state == TaskState.todo ? completeTask : null,
       child: ListTile(
         horizontalTitleGap: 0.0,
         title: Stack(

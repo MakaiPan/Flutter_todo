@@ -5,7 +5,7 @@ part 'task.g.dart';
 const kTaskBox = 'task_box';
 
 @HiveType(typeId: 0)
-class Task {
+class Task with HiveObjectMixin {
   Task({
     required this.title,
     this.state = TaskState.todo,
@@ -25,12 +25,16 @@ class Task {
   final DateTime _createTime = DateTime.now();
 
   @HiveField(4)
-  late DateTime completeTime;
+  DateTime? completeTime;
 
   DateTime get createTime => _createTime;
 }
 
+@HiveType(typeId: 1)
 enum TaskState {
+  @HiveField(1)
   todo,
+
+  @HiveField(2)
   done,
 }

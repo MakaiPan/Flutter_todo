@@ -7,12 +7,8 @@ class HomePages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Body(),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {},
-      ),
+    return const Scaffold(
+      body: Body(),
     );
   }
 }
