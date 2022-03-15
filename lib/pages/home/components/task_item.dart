@@ -31,23 +31,30 @@ class _TaskItemState extends State<TaskItem> {
         title: Stack(
           alignment: AlignmentDirectional.centerStart,
           children: [
+            Text(
+              widget.task.title,
+              style: TextStyle(
+                color: widget.task.state == TaskState.todo
+                    ? Colors.black
+                    : Colors.grey,
+              ),
+            ),
             AnimatedSize(
               duration: const Duration(milliseconds: 250),
               child: Text(
                 widget.task.title.substring(
                     0,
-                    widget.task.state == TaskState.done
+                    widget.task.state == TaskState.todo
                         ? 0
                         : widget.task.title.length),
                 style: const TextStyle(
                   color: Colors.transparent,
-                  decorationColor: Colors.black,
+                  decorationColor: Colors.grey,
                   decorationStyle: TextDecorationStyle.solid,
                   decoration: TextDecoration.lineThrough,
                 ),
               ),
             ),
-            Text(widget.task.title),
           ],
         ),
       ),
