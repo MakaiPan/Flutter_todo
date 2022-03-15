@@ -23,40 +23,52 @@ class _TaskItemState extends State<TaskItem> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.task.state == TaskState.todo ? completeTask : null,
-      child: ListTile(
-        horizontalTitleGap: 0.0,
-        title: Stack(
-          alignment: AlignmentDirectional.centerStart,
-          children: [
-            Text(
-              widget.task.title,
-              style: TextStyle(
-                color: widget.task.state == TaskState.todo
-                    ? Colors.black
-                    : Colors.grey,
-              ),
-            ),
-            AnimatedSize(
-              duration: const Duration(milliseconds: 250),
-              child: Text(
-                widget.task.title.substring(
-                    0,
-                    widget.task.state == TaskState.todo
-                        ? 0
-                        : widget.task.title.length),
-                style: const TextStyle(
-                  color: Colors.transparent,
-                  decorationColor: Colors.grey,
-                  decorationStyle: TextDecorationStyle.solid,
-                  decoration: TextDecoration.lineThrough,
+    return Dismissible(
+      key: UniqueKey(),
+      child: GestureDetector(
+        child: ListTile(
+          horizontalTitleGap: 0.0,
+          title: Stack(
+            alignment: AlignmentDirectional.centerStart,
+            children: [
+              Text(
+                widget.task.title,
+                style: TextStyle(
+                  color: widget.task.state == TaskState.todo
+                      ? Colors.black
+                      : Colors.grey,
                 ),
               ),
-            ),
-          ],
+              AnimatedSize(
+                duration: const Duration(milliseconds: 250),
+                child: Text(
+                  widget.task.title.substring(
+                      0,
+                      widget.task.state == TaskState.todo
+                          ? 0
+                          : widget.task.title.length),
+                  style: const TextStyle(
+                    color: Colors.transparent,
+                    decorationColor: Colors.grey,
+                    decorationStyle: TextDecorationStyle.solid,
+                    decoration: TextDecoration.lineThrough,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        onTap: widget.task.state == TaskState.todo ? completeTask : null,
+      ),
+      background: Container(
+        color: Colors.red,
+        child: const Icon(
+          Icons.delete,
+          color: Colors.white,
         ),
       ),
+      direction: DismissDirection.endToStart,
+      onDismissed: (_) => widget.task.delete(),
     );
   }
 }

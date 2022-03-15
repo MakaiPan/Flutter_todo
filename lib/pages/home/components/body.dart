@@ -14,7 +14,6 @@ class Body extends StatelessWidget {
       valueListenable: Hive.box<Task>(kTaskBox).listenable(),
       builder: (context, box, widget) {
         return ListView(
-          shrinkWrap: true,
           children: [
             for (Task task in box.values) TaskItem(task),
             const NewTaskTile(),
