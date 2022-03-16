@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:todo/constants.dart';
 import 'package:todo/models/task.dart';
 
 class NewTaskTile extends StatefulWidget {
@@ -39,6 +40,9 @@ class _NewTaskTileState extends State<NewTaskTile> {
       ),
       child: TextField(
         focusNode: focusNode,
+        style: TextStyle(
+          fontSize: kTextNormalSize,
+        ),
         decoration: const InputDecoration(
           hintText: 'Add a Task',
           border: InputBorder.none,
