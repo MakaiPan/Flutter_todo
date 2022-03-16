@@ -32,14 +32,14 @@ class _TaskItemState extends State<TaskItem> {
     return Slidable(
       key: UniqueKey(),
       endActionPane: ActionPane(
-        extentRatio: 0.2,
+        extentRatio: 0.16,
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
             spacing: 0.0,
             onPressed: (_) => widget.task.delete(),
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.grey,
             icon: Icons.delete,
           ),
         ],

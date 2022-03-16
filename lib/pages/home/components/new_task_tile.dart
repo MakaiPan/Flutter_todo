@@ -51,9 +51,11 @@ class _NewTaskTileState extends State<NewTaskTile> {
           text = inputText;
         },
         onEditingComplete: () {
-          Task task = Task(title: text);
-          var box = Hive.box<Task>(kTaskBox);
-          box.add(task);
+          if (text.isNotEmpty) {
+            Task task = Task(title: text);
+            var box = Hive.box<Task>(kTaskBox);
+            box.add(task);
+          }
           focusNode.unfocus();
         },
       ),
