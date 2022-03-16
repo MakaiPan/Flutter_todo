@@ -45,32 +45,36 @@ class _TaskItemState extends State<TaskItem> {
         ],
       ),
       child: ListTile(
-        title: GestureDetector(
-          onHorizontalDragDown: (details) {
-            startDragPoint = details.localPosition.dx;
-          },
-          onHorizontalDragUpdate: (details) {
-            if (widget.task.isNotDone &&
-                details.localPosition.dx > startDragPoint + 50) {
-              completeTask();
-            }
-            if (widget.task.isDone &&
-                details.localPosition.dx < startDragPoint - 50) {
-              undoTask();
-            }
-          },
-          child: Text(
-            widget.task.title,
-            style: TextStyle(
-              color: widget.task.isDone ? Colors.grey : Colors.black,
-              decorationColor: Colors.grey,
-              decorationStyle: TextDecorationStyle.solid,
-              decoration: widget.task.isDone
-                  ? TextDecoration.lineThrough
-                  : TextDecoration.none,
-              fontSize: kTextNormalSize,
+        title: Stack(
+          children: [
+            GestureDetector(
+              onHorizontalDragDown: (details) {
+                startDragPoint = details.localPosition.dx;
+              },
+              onHorizontalDragUpdate: (details) {
+                if (widget.task.isNotDone &&
+                    details.localPosition.dx > startDragPoint + 50) {
+                  completeTask();
+                }
+                if (widget.task.isDone &&
+                    details.localPosition.dx < startDragPoint - 50) {
+                  undoTask();
+                }
+              },
+              child: Text(
+                widget.task.title,
+                style: TextStyle(
+                  color: widget.task.isDone ? Colors.grey : Colors.black,
+                  decorationColor: Colors.grey,
+                  decorationStyle: TextDecorationStyle.solid,
+                  decoration: widget.task.isDone
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                  fontSize: kTextNormalSize,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
