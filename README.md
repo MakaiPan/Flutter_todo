@@ -4,9 +4,11 @@ It's a small, easy-to-use todo list app.
 
 ## Packages
 
-| **package**                        | **explain**   |
-|------------------------------------|---------------|
-| [Hive](https://docs.hivedb.dev/#/) | Local storage |
+| **Package**                                                   | **Explain**           |
+|---------------------------------------------------------------|-----------------------|
+| [Hive](https://docs.hivedb.dev/#/)                            | Local storage         |
+| [flutter_slidable](https://pub.dev/packages/flutter_slidable) | Slide Task Controller |
+
 
 
 ## Directory Structure
@@ -21,7 +23,7 @@ The project directory structure is as follows:
 ```
 
 
-| **directory** | **explain**           |
+| **Directory** | **Explain**           |
 |---------------|-----------------------|
 | models        | Model layer directory |
 | pages         | View layer directory  |
