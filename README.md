@@ -2,6 +2,7 @@
 
 It's a small, easy-to-use todo list app.
 
+![Simple demo](https://github.com/MakaiPan/todo/blob/main/README/demo.gif?raw=true)
 ## Packages
 
 | **Package**                                                   | **Explain**           |
