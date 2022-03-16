@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/constants.dart';
 import 'package:todo/models/task.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TaskItem extends StatefulWidget {
   const TaskItem(
@@ -15,76 +16,89 @@ class TaskItem extends StatefulWidget {
 }
 
 class _TaskItemState extends State<TaskItem> {
+  late double startDragPoint;
   void completeTask() {
-    // setState(() {
-    widget.task.state = TaskState.done;
-    widget.task.completeTime = DateTime.now();
+    widget.task.done();
     widget.task.save();
-    // });
   }
 
   void undoTask() {
-    // setState(() {
-    widget.task.state = TaskState.todo;
-    widget.task.completeTime = null;
+    widget.task.reset();
     widget.task.save();
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.centerStart,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: AnimatedSize(
-            duration: const Duration(milliseconds: 250),
-            child: Text(
-              widget.task.title.substring(
-                  0,
-                  widget.task.state == TaskState.todo
-                      ? 0
-                      : widget.task.title.length),
-              style: const TextStyle(
-                color: Colors.transparent,
-                decorationColor: Colors.grey,
-                decorationStyle: TextDecorationStyle.solid,
-                decoration: TextDecoration.lineThrough,
-                fontSize: kTextNormalSize,
-              ),
+    return Slidable(
+      key: UniqueKey(),
+      endActionPane: ActionPane(
+        extentRatio: 0.2,
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            spacing: 0.0,
+            onPressed: (_) => widget.task.delete(),
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+          ),
+        ],
+      ),
+      child: ListTile(
+        title: GestureDetector(
+          onHorizontalDragDown: (details) {
+            startDragPoint = details.localPosition.dx;
+          },
+          onHorizontalDragUpdate: (details) {
+            if (widget.task.isNotDone &&
+                details.localPosition.dx > startDragPoint + 50) {
+              completeTask();
+            }
+            if (widget.task.isDone &&
+                details.localPosition.dx < startDragPoint - 50) {
+              undoTask();
+            }
+          },
+          child: Text(
+            widget.task.title,
+            style: TextStyle(
+              color: widget.task.isDone ? Colors.grey : Colors.black,
+              decorationColor: Colors.grey,
+              decorationStyle: TextDecorationStyle.solid,
+              decoration: widget.task.isDone
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+              fontSize: kTextNormalSize,
             ),
           ),
         ),
-        Dismissible(
-          key: UniqueKey(),
-          child: GestureDetector(
-            child: ListTile(
-              horizontalTitleGap: 0.0,
-              title: Text(
-                widget.task.title,
-                style: TextStyle(
-                  color: widget.task.state == TaskState.todo
-                      ? Colors.black
-                      : Colors.grey,
-                  fontSize: kTextNormalSize,
-                ),
-              ),
-            ),
-            onTap: widget.task.state == TaskState.todo ? completeTask : null,
-            onDoubleTap: widget.task.state == TaskState.done ? undoTask : null,
+      ),
+    );
+  }
+
+  Container deleteWidget() {
+    return Container(
+      color: Colors.red,
+      child: Wrap(
+        alignment: WrapAlignment.end,
+        runAlignment: WrapAlignment.center,
+        spacing: 4.0,
+        children: const [
+          Icon(
+            Icons.delete,
+            color: Colors.white,
           ),
-          background: Container(
-            color: Colors.red,
-            child: const Icon(
-              Icons.delete,
+          Text(
+            'Delete Task',
+            style: TextStyle(
               color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: kTextNormalSize,
             ),
           ),
-          direction: DismissDirection.endToStart,
-          onDismissed: (_) => widget.task.delete(),
-        ),
-      ],
+          SizedBox(width: 16.0),
+        ],
+      ),
     );
   }
 }

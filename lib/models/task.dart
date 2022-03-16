@@ -28,6 +28,19 @@ class Task with HiveObjectMixin {
   DateTime? completeTime;
 
   DateTime get createTime => _createTime;
+
+  bool get isDone => state == TaskState.done;
+  bool get isNotDone => state != TaskState.done;
+
+  void done() {
+    state = TaskState.done;
+    completeTime = DateTime.now();
+  }
+
+  void reset() {
+    state = TaskState.todo;
+    completeTime = null;
+  }
 }
 
 @HiveType(typeId: 1)

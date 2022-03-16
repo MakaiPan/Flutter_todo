@@ -40,7 +40,7 @@ class _NewTaskTileState extends State<NewTaskTile> {
       ),
       child: TextField(
         focusNode: focusNode,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: kTextNormalSize,
         ),
         decoration: const InputDecoration(
